@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { loginSchema } from "@/lib/validations/login-validation"
 import { login } from "@/actions/login"
+import { Loader2 } from "lucide-react"
 
 const LoginForm = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -26,12 +27,12 @@ const LoginForm = () => {
     },
   })
 
-  async function onSubmit(values: z.infer<typeof loginSchema>) {
-    try {
-      login(values)
-    } catch (error) {
-      console.error(error)
-    }
+  const {
+    formState: { isSubmitting },
+  } = form
+
+  function onSubmit(values: z.infer<typeof loginSchema>) {
+    login(values)
   }
 
   return (
@@ -44,7 +45,7 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="email" {...field} />
+                <Input placeholder="email" disabled={isSubmitting} {...field} />
               </FormControl>
               <FormDescription>Email.</FormDescription>
               <FormMessage />
@@ -59,14 +60,24 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="password" {...field} />
+                <Input
+                  placeholder="password"
+                  disabled={isSubmitting}
+                  {...field}
+                />
               </FormControl>
               <FormDescription>Password.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Log In</Button>
+        <Button type="submit" disabled={isSubmitting} className="w-20">
+          {isSubmitting ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            <>Log In</>
+          )}
+        </Button>
       </form>
     </Form>
   )
