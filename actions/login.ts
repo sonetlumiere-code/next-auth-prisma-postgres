@@ -10,5 +10,5 @@ export const login = (values: z.infer<typeof loginSchema>) => {
     return { error: "Invalid fields" }
   }
 
-  return { success: "Email sent" }
+  return { success: "Success" }
 }

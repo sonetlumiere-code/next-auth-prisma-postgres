@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { loginSchema } from "@/lib/validations/login-validation"
+import { login } from "@/actions/login"
 
 const LoginForm = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -25,8 +26,12 @@ const LoginForm = () => {
     },
   })
 
-  function onSubmit(values: z.infer<typeof loginSchema>) {
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
+    try {
+      login(values)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (

@@ -2,7 +2,6 @@
 
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { registerSchema } from "@/lib/validations/register-validation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
 import {
@@ -15,10 +14,12 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { signupSchema } from "@/lib/validations/signup-validation"
+import { signUp } from "@/actions/signup"
 
-const RegisterForm = () => {
-  const form = useForm<z.infer<typeof registerSchema>>({
-    resolver: zodResolver(registerSchema),
+const SignUpForm = () => {
+  const form = useForm<z.infer<typeof signupSchema>>({
+    resolver: zodResolver(signupSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -26,8 +27,8 @@ const RegisterForm = () => {
     },
   })
 
-  function onSubmit(values: z.infer<typeof registerSchema>) {
-    console.log(values)
+  function onSubmit(values: z.infer<typeof signupSchema>) {
+    signUp(values)
   }
 
   return (
@@ -85,4 +86,4 @@ const RegisterForm = () => {
   )
 }
 
-export default RegisterForm
+export default SignUpForm
