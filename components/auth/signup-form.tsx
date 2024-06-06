@@ -30,16 +30,16 @@ const SignUpForm = () => {
 
   const {
     formState: { isSubmitting },
+    handleSubmit,
   } = form
 
   async function onSubmit(values: z.infer<typeof signupSchema>) {
-    const result = await signUp(values)
-    console.log(result)
+    await signUp(values)
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
           name="name"
