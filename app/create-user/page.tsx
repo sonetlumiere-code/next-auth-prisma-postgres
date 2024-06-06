@@ -1,11 +1,7 @@
-import prisma from "@/lib/db/db"
+import { createUser } from "@/actions/create-user"
 
 const CreateUserPage = async () => {
-  await prisma.user.create({
-    data: {
-      name: "asd",
-    },
-  })
+  createUser()
 
   return <div>CreateUserPage</div>
 }
