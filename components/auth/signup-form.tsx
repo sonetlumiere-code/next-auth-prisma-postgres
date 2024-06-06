@@ -90,6 +90,7 @@ const SignUpForm = () => {
             </FormItem>
           )}
         />
+
         <Button type="submit" disabled={isSubmitting} className="w-36">
           {isSubmitting ? (
             <Loader2 className="w-4 h-4 animate-spin" />

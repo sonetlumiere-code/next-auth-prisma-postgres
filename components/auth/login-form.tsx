@@ -31,7 +31,7 @@ const LoginForm = () => {
     formState: { isSubmitting },
   } = form
 
-  function onSubmit(values: z.infer<typeof loginSchema>) {
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
     login(values)
   }
 
@@ -71,6 +71,7 @@ const LoginForm = () => {
             </FormItem>
           )}
         />
+
         <Button type="submit" disabled={isSubmitting} className="w-20">
           {isSubmitting ? (
             <Loader2 className="w-4 h-4 animate-spin" />
