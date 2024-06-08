@@ -5,6 +5,7 @@ import { useState } from "react"
 import { toast } from "../ui/use-toast"
 import { Button } from "../ui/button"
 import { Icons } from "../icons"
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
 
 type GoogleAuthProps = {
   isSubmitting: boolean
@@ -16,7 +17,9 @@ const GoogleAuth = ({ isSubmitting }: GoogleAuthProps) => {
   const signInWithGoogle = async () => {
     try {
       setIsGoogleLoading(true)
-      await signIn("google")
+      await signIn("google", {
+        callbackUrl: DEFAULT_LOGIN_REDIRECT,
+      })
     } catch (error) {
       console.error(error)
       toast({
