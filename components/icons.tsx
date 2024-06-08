@@ -1,9 +1,18 @@
-import { ChevronLeft, Eye, Github, Loader2, LucideProps } from "lucide-react"
+import {
+  ChevronLeft,
+  CircleAlert,
+  CircleCheck,
+  Eye,
+  Loader2,
+  LucideProps,
+} from "lucide-react"
 
 export const Icons = {
   chevronLeft: ChevronLeft,
   spinner: Loader2,
   eye: Eye,
+  circleAlert: CircleAlert,
+  circleCheck: CircleCheck,
   github: ({ ...props }: LucideProps) => (
     <svg
       role="img"

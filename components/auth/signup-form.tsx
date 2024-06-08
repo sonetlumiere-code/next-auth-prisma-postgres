@@ -15,12 +15,17 @@ import {
 import { Input } from "@/components/ui/input"
 import { signupSchema } from "@/lib/validations/signup-validation"
 import { signUp } from "@/actions/signup"
-import { toast } from "../ui/use-toast"
 import { Icons } from "../icons"
 import GoogleAuth from "./google-auth"
 import GithubAuth from "./github-auth"
+import FormSuccess from "./form-success"
+import FormError from "./form-error"
+import { useState } from "react"
 
 const SignUpForm = () => {
+  const [errorMessage, setErrorMessage] = useState<string>("")
+  const [successMessage, setSuccessMessage] = useState<string>("")
+
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -36,20 +41,17 @@ const SignUpForm = () => {
   } = form
 
   async function onSubmit(values: z.infer<typeof signupSchema>) {
+    setErrorMessage("")
+    setSuccessMessage("")
+
     const res = await signUp(values)
+
     if (res.success) {
-      toast({
-        title: "User created.",
-        description: res.success,
-      })
+      setSuccessMessage(res.success)
     }
 
     if (res.error) {
-      toast({
-        variant: "destructive",
-        title: "Error creating user.",
-        description: res.error,
-      })
+      setErrorMessage(res.error)
     }
   }
 
@@ -112,6 +114,9 @@ const SignUpForm = () => {
               )}
             />
           </div>
+
+          {errorMessage && <FormError message={errorMessage} />}
+          {successMessage && <FormSuccess message={successMessage} />}
 
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? (

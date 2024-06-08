@@ -15,12 +15,15 @@ import {
 import { Input } from "@/components/ui/input"
 import { loginSchema } from "@/lib/validations/login-validation"
 import { login } from "@/actions/login"
-import { toast } from "../ui/use-toast"
 import { Icons } from "../icons"
 import GoogleAuth from "./google-auth"
 import GithubAuth from "./github-auth"
+import FormError from "./form-error"
+import { useState } from "react"
 
 const LoginForm = () => {
+  const [errorMessage, setErrorMessage] = useState<string>("")
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -35,14 +38,12 @@ const LoginForm = () => {
   } = form
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
+    setErrorMessage("")
+
     const res = await login(values)
 
     if (res && res.error) {
-      toast({
-        variant: "destructive",
-        title: "Error.",
-        description: res.error,
-      })
+      setErrorMessage(res.error)
     }
   }
 
@@ -87,6 +88,8 @@ const LoginForm = () => {
               )}
             />
           </div>
+
+          {errorMessage && <FormError message={errorMessage} />}
 
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? (
