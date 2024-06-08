@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,6 +18,7 @@ import { signUp } from "@/actions/signup"
 import { toast } from "../ui/use-toast"
 import { Icons } from "../icons"
 import GoogleAuth from "./google-auth"
+import GithubAuth from "./github-auth"
 
 const SignUpForm = () => {
   const form = useForm<z.infer<typeof signupSchema>>({
@@ -135,6 +135,8 @@ const SignUpForm = () => {
       </div>
 
       <GoogleAuth isSubmitting={isSubmitting} />
+
+      <GithubAuth isSubmitting={isSubmitting} />
     </div>
   )
 }
