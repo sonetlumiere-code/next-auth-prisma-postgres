@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum UserRole {
+enum Role {
   ADMIN
   USER
 }
@@ -25,7 +25,7 @@ model User {
   emailVerified DateTime? @map("email_verified")
   image         String?
   password      String?
-  role          UserRole  @default(USER)
+  role          Role      @default(USER)
   accounts      Account[]
 
   @@map("users")
