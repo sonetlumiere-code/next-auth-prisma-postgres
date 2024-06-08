@@ -1,6 +1,6 @@
 "use server"
 
-import { signIn } from "@/auth"
+import { signIn } from "@/lib/auth/auth"
 import { loginSchema } from "@/lib/validations/login-validation"
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
 import { AuthError } from "next-auth"
@@ -33,6 +33,4 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
 
     throw error
   }
-
-  return { success: "Success." }
 }

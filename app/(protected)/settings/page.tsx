@@ -1,5 +1,5 @@
-import { auth } from "@/auth"
 import SignOutButton from "@/components/protected/settings/sign-out-button"
+import { auth } from "@/lib/auth/auth"
 
 const SettingsPage = async () => {
   const session = await auth()

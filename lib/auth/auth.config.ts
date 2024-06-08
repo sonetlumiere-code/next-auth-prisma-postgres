@@ -1,7 +1,7 @@
 import type { NextAuthConfig } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-import { loginSchema } from "./lib/validations/login-validation"
-import prisma from "./lib/db/db"
+import { loginSchema } from "../validations/login-validation"
+import prisma from "../db/db"
 import bcrypt from "bcryptjs"
 
 export default {

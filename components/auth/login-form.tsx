@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input"
 import { loginSchema } from "@/lib/validations/login-validation"
 import { login } from "@/actions/login"
 import { Loader2 } from "lucide-react"
+import { toast } from "../ui/use-toast"
 
 const LoginForm = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -33,7 +34,15 @@ const LoginForm = () => {
   } = form
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    await login(values)
+    const res = await login(values)
+
+    if (res && res.error) {
+      toast({
+        variant: "destructive",
+        title: "Error.",
+        description: res.error,
+      })
+    }
   }
 
   return (

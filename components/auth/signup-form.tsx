@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input"
 import { signupSchema } from "@/lib/validations/signup-validation"
 import { signUp } from "@/actions/signup"
 import { Loader2 } from "lucide-react"
+import { toast } from "../ui/use-toast"
 
 const SignUpForm = () => {
   const form = useForm<z.infer<typeof signupSchema>>({
@@ -34,7 +35,21 @@ const SignUpForm = () => {
   } = form
 
   async function onSubmit(values: z.infer<typeof signupSchema>) {
-    await signUp(values)
+    const res = await signUp(values)
+    if (res.success) {
+      toast({
+        title: "User created.",
+        description: res.success,
+      })
+    }
+
+    if (res.error) {
+      toast({
+        variant: "destructive",
+        title: "Error creating user.",
+        description: res.error,
+      })
+    }
   }
 
   return (
