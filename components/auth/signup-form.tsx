@@ -69,7 +69,7 @@ const SignUpForm = () => {
                   <FormLabel>Username</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="email"
+                      placeholder="name"
                       disabled={isSubmitting}
                       {...field}
                     />
