@@ -115,8 +115,8 @@ const SignUpForm = () => {
             />
           </div>
 
-          {errorMessage && <FormError message={errorMessage} />}
-          {successMessage && <FormSuccess message={successMessage} />}
+          <FormError message={errorMessage} />
+          <FormSuccess message={successMessage} />
 
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? (

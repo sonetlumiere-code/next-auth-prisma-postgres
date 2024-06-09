@@ -20,9 +20,16 @@ import GoogleAuth from "./google-auth"
 import GithubAuth from "./github-auth"
 import FormError from "./form-error"
 import { useState } from "react"
+import { useSearchParams } from "next/navigation"
 
 const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState<string>("")
+
+  const searchParams = useSearchParams()
+  const urlError =
+    searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "Another account already exists with the same email address."
+      : ""
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -89,7 +96,7 @@ const LoginForm = () => {
             />
           </div>
 
-          {errorMessage && <FormError message={errorMessage} />}
+          <FormError message={errorMessage || urlError} />
 
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? (
