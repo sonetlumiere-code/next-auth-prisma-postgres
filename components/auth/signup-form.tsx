@@ -23,6 +23,7 @@ import FormError from "./form-error"
 import { useState } from "react"
 
 const SignUpForm = () => {
+  const [showPassword, setShowPassword] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string>("")
   const [successMessage, setSuccessMessage] = useState<string>("")
 
@@ -103,11 +104,33 @@ const SignUpForm = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="password"
-                      disabled={isSubmitting}
-                      {...field}
-                    />
+                    <div className="relative">
+                      <Input
+                        placeholder="password"
+                        type={showPassword ? "text" : "password"}
+                        autoCapitalize="none"
+                        autoComplete="on"
+                        disabled={isSubmitting}
+                        {...field}
+                      />
+                      <span className="absolute inset-y-0 end-1">
+                        <Button
+                          type="button"
+                          size="icon"
+                          variant="ghost"
+                          className="hover:bg-transparent"
+                          disabled={isSubmitting}
+                          onClick={() => setShowPassword((prev) => !prev)}
+                        >
+                          <span className="sr-only"></span>
+                          {showPassword ? (
+                            <Icons.eyeOff className="h-5 w-5" />
+                          ) : (
+                            <Icons.eye className="h-5 w-5" />
+                          )}
+                        </Button>
+                      </span>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

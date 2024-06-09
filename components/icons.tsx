@@ -3,6 +3,7 @@ import {
   CircleAlert,
   CircleCheck,
   Eye,
+  EyeOff,
   Loader2,
   LucideProps,
 } from "lucide-react"
@@ -11,6 +12,7 @@ export const Icons = {
   chevronLeft: ChevronLeft,
   spinner: Loader2,
   eye: Eye,
+  eyeOff: EyeOff,
   circleAlert: CircleAlert,
   circleCheck: CircleCheck,
   github: ({ ...props }: LucideProps) => (
