@@ -24,8 +24,8 @@ import { useState } from "react"
 
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string>("")
-  const [successMessage, setSuccessMessage] = useState<string>("")
+  const [error, setError] = useState<string>("")
+  const [success, setSuccess] = useState<string>("")
 
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
@@ -42,17 +42,17 @@ const SignUpForm = () => {
   } = form
 
   async function onSubmit(values: z.infer<typeof signupSchema>) {
-    setErrorMessage("")
-    setSuccessMessage("")
+    setError("")
+    setSuccess("")
 
     const res = await signUp(values)
 
     if (res.success) {
-      setSuccessMessage(res.success)
+      setSuccess(res.success)
     }
 
     if (res.error) {
-      setErrorMessage(res.error)
+      setError(res.error)
     }
   }
 
@@ -138,8 +138,8 @@ const SignUpForm = () => {
             />
           </div>
 
-          <FormError message={errorMessage} />
-          <FormSuccess message={successMessage} />
+          <FormError message={error} />
+          <FormSuccess message={success} />
 
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? (

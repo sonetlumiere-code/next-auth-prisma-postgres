@@ -1,6 +1,9 @@
 "use server"
 
 import { signIn } from "@/lib/auth/auth"
+import prisma from "@/lib/db/db"
+import { sendVerificacionEmail } from "@/lib/mail/mail"
+import { generateVerificationToken } from "@/lib/token/token"
 import { loginSchema } from "@/lib/validations/login-validation"
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
 import { AuthError } from "next-auth"
@@ -14,6 +17,29 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
   }
 
   const { email, password } = validatedFields.data
+
+  const existingUser = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  })
+
+  if (!existingUser || !existingUser.email || !existingUser.password) {
+    return { error: "Email does not exist." }
+  }
+
+  if (!existingUser.emailVerified) {
+    const verificationToken = await generateVerificationToken(
+      existingUser.email
+    )
+
+    await sendVerificacionEmail(
+      verificationToken.email,
+      verificationToken.token
+    )
+
+    return { success: "Confirmation email sent." }
+  }
 
   try {
     await signIn("credentials", {

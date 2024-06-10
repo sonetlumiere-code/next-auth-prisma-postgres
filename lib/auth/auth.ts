@@ -18,6 +18,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider !== "credentials") {
+        return true
+      }
+
+      const existingUser = await prisma.user.findUnique({
+        where: { id: user.id },
+      })
+
+      if (!existingUser?.emailVerified) {
+        return false
+      }
+
+      // TO DO: Add 2FA check
+
+      return true
+    },
+
     async jwt({ token }) {
       if (!token.sub) return token
 

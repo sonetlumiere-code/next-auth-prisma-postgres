@@ -21,10 +21,12 @@ import GithubAuth from "./github-auth"
 import FormError from "./form-error"
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
+import FormSuccess from "./form-success"
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string>("")
+  const [error, setError] = useState<string>("")
+  const [success, setSuccess] = useState<string>("")
 
   const searchParams = useSearchParams()
   const urlError =
@@ -46,12 +48,17 @@ const LoginForm = () => {
   } = form
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    setErrorMessage("")
+    setError("")
+    setSuccess("")
 
     const res = await login(values)
 
+    if (res && res.success) {
+      setSuccess(res.success)
+    }
+
     if (res && res.error) {
-      setErrorMessage(res.error)
+      setError(res.error)
     }
   }
 
@@ -119,7 +126,8 @@ const LoginForm = () => {
             />
           </div>
 
-          <FormError message={errorMessage || urlError} />
+          <FormError message={error || urlError} />
+          <FormSuccess message={success} />
 
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? (

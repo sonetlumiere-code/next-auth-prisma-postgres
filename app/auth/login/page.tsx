@@ -4,6 +4,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
+import { Suspense } from "react"
 
 const LoginPage = () => {
   return (
@@ -41,7 +42,9 @@ const LoginPage = () => {
           </p>
         </div>
 
-        <LoginForm />
+        <Suspense>
+          <LoginForm />
+        </Suspense>
 
         <p className="px-8 text-center text-sm text-muted-foreground">
           <Link
