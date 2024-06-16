@@ -13,6 +13,7 @@ import { useCallback, useEffect, useState } from "react"
 import { newVerification } from "@/actions/new-verification"
 import FormError from "./form-error"
 import FormSuccess from "./form-success"
+import { useRouter } from "next/navigation"
 
 const NewVerificationForm = () => {
   const [error, setError] = useState<string>("")
@@ -21,6 +22,8 @@ const NewVerificationForm = () => {
   const searchParams = useSearchParams()
 
   const token = searchParams.get("token")
+
+  const router = useRouter()
 
   const onSubmit = useCallback(async () => {
     if (success || error) {
@@ -36,12 +39,13 @@ const NewVerificationForm = () => {
 
     if (res && res.success) {
       setSuccess(res.success)
+      setTimeout(() => router.replace("/login"), 1000)
     }
 
     if (res && res.error) {
       setError("Something went wrong.")
     }
-  }, [token, success, error])
+  }, [token, success, error, router])
 
   useEffect(() => {
     onSubmit()
