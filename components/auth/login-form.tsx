@@ -22,6 +22,7 @@ import FormError from "./form-error"
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
 import FormSuccess from "./form-success"
+import Link from "next/link"
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -120,6 +121,14 @@ const LoginForm = () => {
                       </span>
                     </div>
                   </FormControl>
+                  <Button
+                    size="sm"
+                    variant="link"
+                    asChild
+                    className="px-0 font-normal"
+                  >
+                    <Link href="/auth/reset-password">Forgot password?</Link>
+                  </Button>
                   <FormMessage />
                 </FormItem>
               )}

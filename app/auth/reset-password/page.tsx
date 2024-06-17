@@ -1,10 +1,11 @@
+import ResetPasswordForm from "@/components/auth/reset-password-form"
 import { Icons } from "@/components/icons"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
 
-const AuthErrorPage = () => {
+const ResetPasswordPage = () => {
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
       <Link
@@ -33,22 +34,14 @@ const AuthErrorPage = () => {
             />
           </Link>
           <h1 className="text-2xl font-semibold tracking-tight">
-            Oops! Something went wrong.
+            Forgot password?
           </h1>
           <p className="text-sm text-muted-foreground">
-            Authentication failed, try again later.
+            Enter your email to reset your password
           </p>
         </div>
 
-        <Link
-          href="/auth/login"
-          className={cn(
-            buttonVariants({ variant: "ghost" }),
-            "w-full text-center"
-          )}
-        >
-          Back to Log In
-        </Link>
+        <ResetPasswordForm />
 
         <p className="px-8 text-center text-sm text-muted-foreground">
           <Link
@@ -63,4 +56,4 @@ const AuthErrorPage = () => {
   )
 }
 
-export default AuthErrorPage
+export default ResetPasswordPage
