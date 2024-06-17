@@ -3,6 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import prisma from "@/lib/db/db"
 import authConfig from "./auth.config"
 import { Role } from "@prisma/client"
+import { getUser } from "@/data/user"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
@@ -23,9 +24,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return true
       }
 
-      const existingUser = await prisma.user.findUnique({
-        where: { id: user.id },
-      })
+      const existingUser = await getUser({ where: { id: user.id } })
 
       if (!existingUser?.emailVerified) {
         return false
@@ -39,9 +38,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token }) {
       if (!token.sub) return token
 
-      const existingUser = await prisma.user.findUnique({
-        where: { id: token.sub },
-      })
+      const existingUser = await getUser({ where: { id: token.sub } })
 
       if (!existingUser) return token
 
